@@ -1,0 +1,54 @@
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  width: 90%;
+  margin: auto;
+}
+
+.filter-container h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  list-style: none;
+}
+
+.filter-options li button {
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  position: relative;
+  border: none;
+  background-color: inherit;
+  outline: none;
+  color: black;
+  cursor: pointer;
+}
+
+.filter-options li button:after {
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background: #174497;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+.filter-options li button:hover:after,
+.filter-options li button.active:after {
+  width: 100%;
+  left: 0;
+}
+.filter-container h2,
+.filter-options {
+  margin-bottom: 0;
+}
