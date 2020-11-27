@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Editor, EditorState, convertFromRaw } from "draft-js";
-
+import { EditorState, convertFromRaw } from "draft-js";
+import { Editor } from "react-draft-wysiwyg";
 import { Grid, makeStyles, Paper, Hidden } from "@material-ui/core";
 
 import NavBar from "../../core/navbar/NavBar";
@@ -60,7 +60,7 @@ function ReadPost(props) {
                   {loader ? (
                     <CircularLoader />
                   ) : (
-                    <Editor editorState={editorState} readOnly={true} />
+                    <Editor editorState={editorState} readOnly toolbarHidden />
                   )}
                 </div>
               </Paper>

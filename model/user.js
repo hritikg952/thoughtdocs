@@ -61,6 +61,12 @@ const userSchema = new mongoose.Schema(
         ref: "Post",
       },
     ],
+    likedPost: [
+      {
+        type: ObjectId,
+        ref: "Post",
+      },
+    ],
     salt: String,
     encry_password: {
       type: String,
@@ -100,3 +106,4 @@ userSchema.methods = {
 };
 
 module.exports = mongoose.model("User", userSchema);
+
