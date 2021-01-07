@@ -1,24 +1,19 @@
-const Post = require("../model/post");
-
 const express = require("express");
 const router = express.Router();
 
-const {
-  getUserById,
-  userPostList,
-  pushPostInPostList,
-  pushPostIdInPostList,
-  updatePostNumber,
-} = require("../controllers/user");
+const { getUserById } = require("../controllers/user");
 const { isSignedIn, isAdmin, isAuthenticated } = require("../controllers/auth");
 const {
   getPostById,
   createPost,
   getPost,
   getAllPost,
+  getAllPostOnlyPublished,
+  getAllPostOnlyPublishedPaginated,
   updatePost,
   updatePublishStatusInPost,
   deletePost,
+  toggleLike,
 } = require("../controllers/post");
 
 //?PARAM route
@@ -30,17 +25,14 @@ router.post(
   "/post/create/:userId",
   isSignedIn, //should be signed in
   isAuthenticated, //should be authenticated
-  //isAdmin, //only admin can create a category
   createPost
-  // pushPostInPostList,
-  // pushPostIdInPostList,
-  //updatePostNumber,
 );
 
 //?READ routes
 router.get("/post/:userId/:postId", getPost);
-router.get("/post", getAllPost);
-// router.get("/post/list/:userId", userPostList);
+router.get("/postsOnlyPublished", getAllPostOnlyPublished);
+router.get("/postsOnlyPublishedPaginated", getAllPostOnlyPublishedPaginated);
+router.get("/posts", getAllPost);
 
 //?UPDATE route
 router.put(
@@ -62,6 +54,15 @@ router.delete(
   isSignedIn,
   isAuthenticated,
   deletePost
+);
+
+//?Other services route
+//!LIKE
+router.post(
+  "/post/like/:userId/:postId",
+  isSignedIn,
+  isAuthenticated,
+  toggleLike
 );
 
 module.exports = router;

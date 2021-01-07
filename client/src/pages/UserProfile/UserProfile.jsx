@@ -2,7 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
-import { Paper, Grid, makeStyles, Button, Typography } from "@material-ui/core";
+import {
+  Paper,
+  Grid,
+  makeStyles,
+  Button,
+  Typography,
+  Hidden,
+} from "@material-ui/core";
 import CakeIcon from "@material-ui/icons/Cake";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 
@@ -74,8 +81,10 @@ const useStyles = makeStyles((theme) => ({
 function UserProfile(props) {
   const classes = useStyles();
 
-  const authenticated = isAutheticated()
-  const visibility = authenticated!==false && authenticated.user._id === props.location.state.userId
+  const authenticated = isAutheticated();
+  const visibility =
+    authenticated !== false &&
+    authenticated.user._id === props.location.state.userId;
 
   const [userDetails, setUserDetails] = useState({});
   const [loader, setLoader] = useState(false);
@@ -93,14 +102,17 @@ function UserProfile(props) {
 
   const UserProfilePage = () => {
     return (
-      <div style={{ padding: "10px" }}>
+      <div style={{ padding: "100px 10px 10px 10px" }}>
         <Grid container justify="center" spacing={2}>
           <Grid item lg={11}>
             <Paper elevation={3} className={classes.userInfo}>
               <Grid container justify="center" className={classes.subContainer}>
                 <Grid item lg={12} className={classes.topSection}>
-                  <div></div>
-                  { visibility && (
+                  {/* <Hidden mdDown>
+                    <div></div>
+                  </Hidden> */}
+
+                  {visibility && (
                     <Button
                       variant="contained"
                       color="primary"
@@ -180,6 +192,7 @@ function UserProfile(props) {
                 <CircularLoader />
               ) : userPostDetails.length > 0 ? (
                 userPostDetails.map((post, index) => {
+                  console.log(post);
                   return (
                     <PostCard
                       key={index}
@@ -188,7 +201,8 @@ function UserProfile(props) {
                       date={moment(post.created_at).format("MMM Do YY")}
                       title={post.title}
                       id={post._id}
-                      commentCount={post.comments.length}
+                      likes={post.likes}
+                      comments={post.comments}
                       published={post.published}
                       isSwitch={visibility}
                       isDelete={visibility}
@@ -204,7 +218,8 @@ function UserProfile(props) {
                   }}
                 >
                   <Typography variant="h3">
-                    Click here to write your first post!
+                    Click <Link to="/writeapost">here</Link> to write your first
+                    post!
                   </Typography>
                 </Paper>
               )}

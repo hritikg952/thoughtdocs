@@ -66,9 +66,47 @@ exports.getPost = (req, res) => {
   return res.json(req.post);
 };
 
-exports.getAllPost = (req, res) => {
+exports.getAllPostOnlyPublished = (req, res) => {
   Post.find({ published: true })
     .populate("author")
+    .select("author title published comments likes updatedAt")
+    .exec((err, post) => {
+      if (err) {
+        return res.status(400).json({
+          error: "no Post in DB",
+        });
+      }
+      return res.json(post);
+    });
+};
+
+const getPaginated = (page, size) => {
+  const limit = size ? +size : 5;
+  const offset = page ? page * limit : 0;
+  return { limit, offset };
+};
+
+exports.getAllPostOnlyPublishedPaginated = (req, res) => {
+  const { page, size } = req.query;
+  const { limit, offset } = getPaginated(page, size);
+  Post.paginate(
+    { published: true },
+    { select: "author title published comments likes updatedAt",populate:"author", offset, limit }
+  )
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      res.status(400).json({
+        error: "no post in DB",
+      });
+    });
+};
+
+exports.getAllPost = (req, res) => {
+  Post.find()
+    .populate("author")
+    .select("author title published comments likes")
     .exec((err, post) => {
       if (err) {
         return res.status(400).json({
@@ -100,7 +138,7 @@ exports.updatePublishStatusInPost = (req, res, id) => {
   Post.findByIdAndUpdate(
     { _id: req.post._id },
     { $set: req.body },
-    { useFindAndModify: false },
+    { new: true },
     (err, post) => {
       if (err) {
         console.log(err);
@@ -132,6 +170,55 @@ exports.deletePost = (req, res) => {
 //?OTHER SERVICES in POST
 //! like
 
-exports.toggleLike = (req,res)=>{
-  Post.findOneAndUpdate()
-}
+exports.toggleLike = (req, res) => {
+  const action = req.body.action;
+  const counter = action === "like" ? 1 : -1;
+  Post.findByIdAndUpdate(
+    { _id: req.post._id },
+    { $inc: { likes: counter } },
+    { useFindAndModify: false, new: true },
+    (err, post) => {
+      if (err) {
+        return res.status(400).json({
+          error: "Post can not be liked!",
+        });
+      }
+
+      if (action === "like") {
+        // const likedPost = [];
+        // likedPost.push({ _id: post._id });
+        User.findByIdAndUpdate(
+          { _id: req.profile._id },
+          { $push: { likedPost: { _id: post._id } } },
+          { useFindAndModify: false, new: true },
+          (err) => {
+            if (err) {
+              return res.status(400).json({
+                error: "Unable to save Post in liked list!",
+              });
+            }
+          }
+        );
+      } else {
+        User.findByIdAndUpdate(
+          { _id: req.profile._id },
+          { $pull: { likedPost: post._id } },
+          { useFindAndModify: false, new: true },
+          (err) => {
+            if (err) {
+              return res.status(400).json({
+                error: "unable to delete post from liked list!",
+              });
+            }
+          }
+        );
+      }
+      return res.json({
+        _id: post._id,
+        author: post.author,
+        published: post.published,
+        likes: post.likes,
+      });
+    }
+  );
+};

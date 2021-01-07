@@ -125,7 +125,7 @@ function EditProfile(props) {
 
   const editprofile = () => {
     return (
-      <div style={{ padding: "10px" }}>
+      <div style={{ padding: "100px 10px 10px 10px" }}>
         <Grid container justify="center" spacing={2}>
           <Grid item lg={8}>
             <Paper elivation={3} className={classes.editContainer}>

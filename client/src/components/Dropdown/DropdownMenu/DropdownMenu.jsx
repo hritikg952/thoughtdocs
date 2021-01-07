@@ -1,22 +1,23 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   ddContainer: {
+    // margin:"0",
     position: "absolute",
     top: "68px",
+    right:0,
     width: "300px",
-    transform: "translateX(-45%)",
-    padding: "1rem",
+    padding: "0.5rem",
     overflow: "hidden",
     backgroundColor: "white",
     display: "flex",
     flexDirection: "column",
     zIndex: 1,
-    borderRadius: "10px"
-    
+    borderRadius: "4px",
+    border: "4px solid #000",
+    textAlign:"left"
   },
 }));
 

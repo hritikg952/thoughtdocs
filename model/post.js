@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const { ObjectId, Mixed } = mongoose.Schema;
+const mongoosePaginate = require("mongoose-paginate-v2");
+const { ObjectId } = mongoose.Schema;
 
 const postSchema = new mongoose.Schema(
   {
@@ -37,5 +38,6 @@ const postSchema = new mongoose.Schema(
   },
   { timestamps: { createdAt: "created_at" } }
 );
+postSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model("Post", postSchema);

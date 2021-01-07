@@ -2,7 +2,6 @@ import axios from "axios";
 import API from "../backend";
 import { isAutheticated } from "../auth/helper/index";
 
-
 axios.interceptors.request.use(function (config) {
   const details = isAutheticated();
   if (details) {
@@ -17,6 +16,18 @@ axios.interceptors.request.use(function (config) {
 export const getUser = (user_id) => {
   return axios
     .get(`${API}/user/${user_id}`)
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      return err;
+    });
+};
+
+//! get user liked post list
+export const getUserLikedPostList = (user_id) => {
+  return axios
+    .get(`${API}/user/likedPost/${user_id}`)
     .then((res) => {
       return res;
     })
@@ -49,10 +60,33 @@ export const updateProfileImage = (user_id, data) => {
 };
 
 //** POST ROUTES */
-//! get all POSTS
+//! get all POSTS ONLY PUBLISHED
+export const getAllPostsOnlyPublished = () => {
+  return axios
+    .get(`${API}/postsOnlyPublished`)
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      return err;
+    });
+};
+//! get all POSTS ONLY PUBLISHED PAGINATED
+export const getAllPostsOnlyPublishedPaginated = (page) => {
+  console.log(page)
+  return axios
+    .get(`${API}/postsOnlyPublishedPaginated?page=${page}`)
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      return err;
+    });
+};
+//! get all posts without content
 export const getAllPosts = () => {
   return axios
-    .get(`${API}/post`)
+    .get(`${API}/posts`)
     .then((res) => {
       return res;
     })
@@ -130,6 +164,31 @@ export const updatePublishStatusInPost = (body, author_id, id) => {
 export const deletePost = (author_id, id) => {
   return axios
     .delete(`${API}/post/delete/${author_id}/${id}`)
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      return err;
+    });
+};
+
+//?Other Post services routes
+//! TOGGLE LIKE
+export const toggleLike = (user_id, post_id, action) => {
+  return axios
+    .post(`${API}/post/like/${user_id}/${post_id}`, { action: action })
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      return err;
+    });
+};
+//! GET LIKES OF POST
+export const getLikesOfPost = (post_id) => {
+  console.log("like post", post_id);
+  return axios
+    .get(`${API}/post/likes/${post_id}`)
     .then((res) => {
       return res;
     })

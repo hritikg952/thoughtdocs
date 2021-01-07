@@ -1,5 +1,4 @@
 const Post = require("../model/post");
-const User = require("../model/user");
 const Comment = require("../model/comment");
 
 //?PARAM route

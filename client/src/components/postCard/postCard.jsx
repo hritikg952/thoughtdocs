@@ -11,19 +11,26 @@ import {
   FormControlLabel,
   IconButton,
 } from "@material-ui/core";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 import { Link } from "react-router-dom";
 
-import { updatePublishStatusInPost, deletePost } from "../../helpers/index";
+import {
+  updatePublishStatusInPost,
+  deletePost,
+  toggleLike,
+} from "../../helpers/index";
 import DeleteModal from "../DeleteModal/DeleteModal";
 function PostCard({
+  isLoading,
   author,
   profileImage,
   title,
   date,
   id,
   author_id,
-  commentCount,
+  comments,
+  likes,
   isSwitch = false,
   isDelete = false,
   published,
@@ -67,13 +74,25 @@ function PostCard({
         <div className="postcard-header">
           <div className="postcard-header-sub">
             <div className="profile">
-              {profileImage !== null && (
-                <img src={profileImage} className="profileImage" />
+              {isLoading ? (
+                <Skeleton variant="circle" width={40} height={40} />
+              ) : (
+                profileImage !== null && (
+                  <img src={profileImage} className="profileImage" />
+                )
               )}
             </div>
             <div>
-              <h3>{author}</h3>
-              <p style={{ color: "grey" }}>{date}</p>
+              {isLoading ? (
+                <Skeleton variant="text" width={100} />
+              ) : (
+                <h3>{author}</h3>
+              )}
+              {isLoading ? (
+                <Skeleton variant="text" width={150} />
+              ) : (
+                <p style={{ color: "grey" }}>{date}</p>
+              )}
             </div>
           </div>
           {isSwitch && (
@@ -95,31 +114,39 @@ function PostCard({
           )}
         </div>
         <div className="postcard-story">
-          <Link
-            to={{
-              pathname: `/post/${id}`,
-              state: { id: id, author_id: author_id },
-            }}
-          >
-            {title}
-          </Link>
+          {isLoading ? (
+            <Skeleton variant="rect" width={800} height={30} />
+          ) : (
+            <Link
+              to={{
+                pathname: `/post/${id}`,
+                state: { id: id, author_id: author_id },
+              }}
+            >
+              {title}
+            </Link>
+          )}
+
           <div className="postcard-reacts">
-            <div style={{ display: "flex" }}>
-              <button>
-                <FontAwesomeIcon
-                  icon={faHeart}
-                  style={{ color: "rgb(54, 54, 54)" }}
-                />
-                <span>Likes</span>
-              </button>
-              <button>
-                {commentCount}
-                <FontAwesomeIcon
-                  icon={faComment}
-                  style={{ color: "rgb(54, 54, 54)" }}
-                />
-                <span>Comments</span>
-              </button>
+            <div className="likesANDcomment">
+              <div>
+                <p className="reacts-icon">
+                  <FontAwesomeIcon
+                    icon={faHeart}
+                    style={{ color: "#ec5858" }}
+                  />
+                </p>
+                {likes ? <p>{likes}</p> : <p>0</p>}
+              </div>
+              <div>
+                <p className="reacts-icon">
+                  <FontAwesomeIcon
+                    icon={faComment}
+                    style={{ color: "#01c5c4" }}
+                  />
+                </p>
+                {comments ? <p>{comments.length}</p> : <p>0</p>}
+              </div>
             </div>
             {isDelete && (
               <IconButton

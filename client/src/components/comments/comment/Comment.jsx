@@ -67,7 +67,7 @@ function Comment({ data }) {
   };
 
   return (
-    <Grid container sm={12} className={classes.commentContainer}>
+    <Grid container className={classes.commentContainer}>
       <Grid item  className={classes.rowContainer}>
         <Typography
           variant="h6"

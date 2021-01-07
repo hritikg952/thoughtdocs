@@ -5,6 +5,7 @@ const {
   getUserById,
   getUser,
   getAllUser,
+  getUserLikedPostList,
   updateUser,
   updateProfileImage,
   userPostList,
@@ -30,7 +31,10 @@ router.get(
 router.get("/user/:userId", getUser);
 
 //?get user post list
-router.get("/user/post/:userId",userPostList);
+router.get("/user/post/:userId", userPostList);
+
+//? get user liked post list
+router.get("/user/likedPost/:userId", getUserLikedPostList);
 
 //?UPDATE route
 router.put("/user/:userId", isSignedIn, isAuthenticated, updateUser);

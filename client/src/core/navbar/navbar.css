@@ -1,14 +1,50 @@
 .header {
-  /* position: fixed; */
-  background-color: rgb(34, 58, 71);
+  position: fixed;
+  z-index: 9;
+  background-color: #ffffff;
   width: 100%;
   height: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 1rem;
-  color: aliceblue;
+  color: #323ebe;
+  font-weight: 600;
   padding: 0 60px;
+  box-shadow: 0px 5px 14px -9px rgba(0, 0, 0, 0.95);
+}
+
+.header .left-section{
+  display: flex;
+}
+
+.logo {
+  background-color: #000;
+  padding: 0.4rem 0.8rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.logo a{
+  text-decoration: none;
+  font-weight: 900;
+  color: #ffffff;
+}
+.logo:hover{
+  background-color: rgb(27, 27, 27);
+}
+
+.searchbar{
+  margin-left: 0.5rem;
+  font-size: 1.3rem;
+  padding: 0 0.5rem;
+  border-radius: 10px;
+  border: 1px solid #b3b2b2;
+  outline: none;
+  transition: 0.4s;
+  width: 400px;
+}
+.searchbar:focus{
+  border: 2px solid #000;
 }
 
 .header .nav {
@@ -17,15 +53,17 @@
   justify-content: center;
   align-items: center;
 }
-.header .nav a {
+.header .nav > a {
   padding: 0.5rem 1rem;
   font-size: 1.5rem;
+  border-radius: 10px;
   font-weight: 500;
   text-decoration: none;
-  color: aliceblue;
+  color: #323ebe;
+  margin-left: 5px;
 }
-.nav a:hover {
-  color: orange;
+.nav > a:hover {
+  background-color: #F6F6F6;
   transition: all 0.3s ease-out;
   cursor: pointer;
 }
@@ -58,15 +96,42 @@
 }
 
 .header .nav .post-btn {
-  background-color: rgb(17, 199, 231);
+  background-color: #323ebe;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: 600;
+  transform-style: flat;
+}
+.header .nav .post-btn:hover {
+  background-color: #1f299b;
+}
+
+.header .nav .ddItem {
+  text-decoration: none;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: rgb(54, 54, 54);
+  font-weight: 600;
+  border-radius: 10px;
+}
+.header .nav .ddItem:hover{
+  background-color: #F6F6F6;
+  color: #323ebe;
+}
+.header .nav .ddItem-button {
+  background-color: tomato;
   border: none;
   border-radius: 5px;
   color: black;
+  font-weight: bold;
+  font-size: 1.2rem;
   transform-style: flat;
   transition: all 250ms ease-out;
-}
-.header .nav .post-btn:hover {
-  background-color: rgb(7, 110, 151);
+  margin-top: 5px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
 }
 
 @media (max-width: 700px) {
@@ -92,19 +157,9 @@
   .burger {
     display: inline;
   }
+  .searchbar{
+    display: none;
+  }
 }
 
-.header .nav .ddItem {
-  color: rgb(54, 54, 54);
-  font-weight: 600;
-}
-.header .nav .ddItem-button {
-  background-color: tomato;
-  border: none;
-  border-radius: 5px;
-  color: black;
-  font-weight: bold;
-  transform-style: flat;
-  transition: all 250ms ease-out;
-  padding: 0.5rem 1rem;
-}
+

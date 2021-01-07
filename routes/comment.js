@@ -11,7 +11,6 @@ const {
   createChildComment,
   getCommentsByPost,
 } = require("../controllers/comment");
-const { route } = require("./post");
 
 //?PARAM route
 router.param("postId", getPostById);

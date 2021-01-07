@@ -5,7 +5,7 @@ exports.getUserById = (req, res, next, id) => {
   User.findById(id).exec((err, user) => {
     if (err) {
       return res.status(400).json({
-        error: "User not found in DB",
+        error: "user not found in DB",
       });
     }
 
@@ -37,6 +37,17 @@ exports.getAllUser = (req, res) => {
     });
 };
 
+exports.getUserLikedPostList = (req, res) => {
+  User.findById(req.profile._id).exec((err, user) => {
+    if (err) {
+      return res.status(400).json({
+        error: "no user in DB",
+      });
+    }
+    res.json(user.likedPost);
+  });
+};
+
 exports.updateUser = (req, res) => {
   User.findByIdAndUpdate(
     { _id: req.profile._id },
@@ -56,7 +67,7 @@ exports.updateUser = (req, res) => {
 };
 
 exports.updateProfileImage = (req, res) => {
-  console.log(req.file)
+  console.log(req.file);
   User.findByIdAndUpdate(
     { _id: req.profile._id },
     {
@@ -81,6 +92,7 @@ exports.updateProfileImage = (req, res) => {
 exports.userPostList = (req, res) => {
   Post.find({ author: req.profile._id })
     .populate("author", "name lastname _id")
+    .select("author title published comments likes")
     .exec((err, post) => {
       if (err) {
         return res.status(400).json({

@@ -99,7 +99,10 @@ function WriteAPost() {
 
   const writeapost = () => {
     return (
-      <div className="write-a-post-container">
+      <div
+        className="write-a-post-container"
+        style={{ padding: "100px 10px 10px 10px" }}
+      >
         <input
           type="text"
           placeholder="Enter Title..."
