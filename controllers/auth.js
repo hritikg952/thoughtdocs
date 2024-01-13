@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const expressJwt = require("express-jwt");
+const { expressjwt: express_jwt } = require("express-jwt");
 
 const secret = process.env.SECRET || "localStringSecretKey"
 
@@ -86,8 +86,9 @@ exports.signout = (req, res) => {
 
 //**isSignedIn route */
 
-exports.isSignedIn = expressJwt({
+exports.isSignedIn = express_jwt({
   secret: secret,
+  algorithms: ["HS256"],
   userProperty: "auth",
 });
 

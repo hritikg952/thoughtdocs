@@ -19,10 +19,10 @@ const cors = require("cors");
 
 const app = express();
 const port = process.env.PORT || 5500;
-
+const uri = "mongodb+srv://hritikg950:mongodb_hritik_1426@docthoughtcluster.ta0urzt.mongodb.net/?retryWrites=true&w=majority";
 //connecting to DATABASE
 mongoose
-  .connect(process.env.DATABASE, {
+  .connect(process.env.DATABASE || uri, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,

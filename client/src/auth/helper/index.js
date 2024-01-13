@@ -1,6 +1,6 @@
 import axios from "axios";
-const API = process.env.REACT_APP_BACKEND;
-//API = "http://localhost:5500/api"
+const API = process.env.REACT_APP_BACKEND || "http://localhost:5500/api";
+// API = "http://localhost:5500/api"
 
 export const signin = (data) => {
   return axios

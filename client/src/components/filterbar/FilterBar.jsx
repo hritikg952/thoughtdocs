@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import "./filterBar.css";
 function FilterBar() {
-  const filterBar = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
     const [filter, setFilter] = useState("feed");
 
     const handleFilterChange = (e, type) => {
@@ -19,8 +18,8 @@ function FilterBar() {
         },
       });
     }, [filter]);
-    return (
-      <div className="filter-container">
+
+  return <div className="filter-container">
         <h2>Posts</h2>
         <ul className="filter-options">
           <li>
@@ -73,11 +72,7 @@ function FilterBar() {
             </button>
           </li>
         </ul>
-      </div>
-    );
-  };
-
-  return <div>{filterBar()}</div>;
+      </div>;
 }
 
 export default FilterBar;

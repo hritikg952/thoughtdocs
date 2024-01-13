@@ -55,9 +55,7 @@ function PostCard({
     });
   };
 
-  //!main function
-  const postcard = () => {
-    const [isPublished, setIsPublished] = useState(published);
+  const [isPublished, setIsPublished] = useState(published);
 
     const handlePublishedChange = (event) => {
       setIsPublished(event.target.checked);
@@ -69,8 +67,8 @@ function PostCard({
         console.log(data);
       });
     };
-    return (
-      <div className="postcard-container">
+
+  return <div className="postcard-container">
         <div className="postcard-header">
           <div className="postcard-header-sub">
             <div className="profile">
@@ -164,11 +162,7 @@ function PostCard({
             handleDelete={handleDeletePost}
           />
         </div>
-      </div>
-    );
-  };
-
-  return <>{postcard()}</>;
+      </div>;
 }
 
 export default PostCard;
